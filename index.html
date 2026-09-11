@@ -1,0 +1,1816 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Coche Finance | Calcula tu cuota de coche gratis</title>
+
+  <meta
+    name="description"
+    content="Calcula la cuota de financiación de tu coche, descubre qué presupuesto puedes permitirte y aprende a financiar un coche de forma sencilla."
+  >
+
+  <meta name="robots" content="index, follow">
+
+  <meta name="theme-color" content="#0b1220">
+
+  <link rel="canonical" href="https://emilioglez96.github.io/financiacion-coches/">
+
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --dark: #0b1220;
+      --dark2: #111827;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --text: #172033;
+      --muted: #667085;
+      --white: #ffffff;
+      --border: #e5e7eb;
+      --success: #15803d;
+      --shadow: 0 15px 40px rgba(15, 23, 42, .08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    /* HEADER */
+
+    header {
+      background: var(--dark);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.4px;
+    }
+
+    .logo span {
+      color: #60a5fa;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      color: #dbe4f0;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    /* HERO */
+
+    .hero {
+      background:
+        radial-gradient(circle at top right, rgba(37,99,235,.35), transparent 35%),
+        linear-gradient(135deg, #0b1220, #111827);
+      color: white;
+      padding: 75px 0 85px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(96,165,250,.14);
+      color: #93c5fd;
+      border: 1px solid rgba(147,197,253,.2);
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 5vw, 62px);
+      line-height: 1.03;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      color: #cbd5e1;
+      font-size: 18px;
+      max-width: 650px;
+      margin-bottom: 25px;
+    }
+
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .trust span {
+      padding: 8px 11px;
+      border-radius: 10px;
+      background: rgba(255,255,255,.07);
+      color: #dbeafe;
+      font-size: 13px;
+    }
+
+    /* CARDS */
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .calculator {
+      padding: 26px;
+      color: var(--text);
+    }
+
+    .calculator h2 {
+      margin-bottom: 8px;
+      font-size: 25px;
+    }
+
+    .calculator > p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 13px 14px;
+      border: 1px solid #d5dbe5;
+      border-radius: 11px;
+      background: white;
+      color: var(--text);
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+    }
+
+    .btn {
+      width: 100%;
+      border: 0;
+      border-radius: 11px;
+      padding: 14px 18px;
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 14px;
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+    }
+
+    .result small {
+      color: #475569;
+    }
+
+    .result strong {
+      display: block;
+      color: var(--primary-dark);
+      font-size: 32px;
+      margin: 2px 0;
+    }
+
+    .result p {
+      color: #475569;
+      font-size: 13px;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 75px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 40px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(30px, 4vw, 42px);
+      line-height: 1.1;
+      margin-bottom: 12px;
+      letter-spacing: -.8px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .info-card {
+      padding: 25px;
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #eff6ff;
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+
+    .info-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* SECOND CALCULATOR */
+
+    .budget-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      align-items: stretch;
+    }
+
+    .budget-form,
+    .budget-result {
+      padding: 28px;
+    }
+
+    .budget-result {
+      background: var(--dark);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-radius: var(--radius);
+    }
+
+    .budget-result p {
+      color: #cbd5e1;
+    }
+
+    .budget-result strong {
+      font-size: 42px;
+      margin: 10px 0;
+    }
+
+    /* ARTICLE */
+
+    .article {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .article h2 {
+      font-size: 34px;
+      margin-bottom: 20px;
+    }
+
+    .article h3 {
+      font-size: 23px;
+      margin: 30px 0 10px;
+    }
+
+    .article p {
+      color: #475569;
+      margin-bottom: 15px;
+    }
+
+    .article ul {
+      padding-left: 22px;
+      color: #475569;
+      margin-bottom: 18px;
+    }
+
+    /* STEPS */
+
+    .steps {
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 25px 25px 25px 75px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 25px;
+      top: 25px;
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-weight: 800;
+    }
+
+    /* FORM */
+
+    .contact-wrap {
+      max-width: 750px;
+      margin: auto;
+      padding: 30px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 14px 0;
+    }
+
+    .check input {
+      width: auto;
+      margin-top: 4px;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* FAQ */
+
+    .faq {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    details {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 18px 20px;
+      margin-bottom: 10px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    details p {
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    /* LEGAL */
+
+    .legal {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .legal h2 {
+      margin-bottom: 15px;
+    }
+
+    .legal h3 {
+      margin-top: 25px;
+      margin-bottom: 8px;
+    }
+
+    .legal p,
+    .legal li {
+      color: #475569;
+      font-size: 14px;
+    }
+
+    .legal ul {
+      padding-left: 20px;
+    }
+
+    .warning {
+      padding: 15px;
+      border-radius: 12px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: var(--dark);
+      color: #cbd5e1;
+      padding: 40px 0;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    footer h3 {
+      color: white;
+      margin-bottom: 6px;
+    }
+
+    footer p {
+      font-size: 13px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 13px;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* COOKIE */
+
+    #cookieBanner {
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      background: white;
+      border: 1px solid #dbe2ea;
+      border-radius: 16px;
+      box-shadow: 0 15px 45px rgba(0,0,0,.15);
+      padding: 18px;
+      z-index: 2000;
+      display: none;
+    }
+
+    #cookieBanner p {
+      color: #475569;
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .cookie-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .cookie-buttons button {
+      flex: 1;
+      border: 0;
+      border-radius: 10px;
+      padding: 11px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .accept {
+      background: var(--primary);
+      color: white;
+    }
+
+    .reject {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 50px 0 60px;
+      }
+
+      .hero-grid,
+      .budget-box {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        letter-spacing: -1.2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+    <div class="container nav">
+      <a href="#inicio" class="logo">
+        Coche<span>Finance</span>
+      </a>
+
+      <nav>
+        <a href="#calculadora">Calculadora</a>
+        <a href="#presupuesto">Presupuesto</a>
+        <a href="#consejos">Consejos</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- HERO -->
+
+  <main id="inicio">
+
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div>
+          <span class="badge">Calculadora gratuita de financiación</span>
+
+          <h1>
+            Antes de comprar un coche,
+            calcula cuánto pagarás.
+          </h1>
+
+          <p>
+            Calcula una cuota mensual orientativa, descubre qué presupuesto
+            de coche puedes permitirte y aprende a comparar opciones de
+            financiación antes de tomar una decisión.
+          </p>
+
+          <div class="trust">
+            <span>✓ Gratis</span>
+            <span>✓ Fácil de usar</span>
+            <span>✓ Sin compromiso</span>
+            <span>✓ Cálculo orientativo</span>
+          </div>
+        </div>
+
+
+        <!-- CALCULADORA PRINCIPAL -->
+
+        <div class="card calculator" id="calculadora">
+
+          <h2>Calcula tu cuota</h2>
+
+          <p>
+            Introduce algunos datos y obtén una estimación de tu cuota mensual.
+          </p>
+
+          <div class="field">
+            <label for="carPrice">Precio del coche (€)</label>
+            <input
+              id="carPrice"
+              type="number"
+              min="0"
+              step="100"
+              value="20000"
+            >
+          </div>
+
+          <div class="field">
+            <label for="downPayment">Entrada (€)</label>
+            <input
+              id="downPayment"
+              type="number"
+              min="0"
+              step="100"
+              value="3000"
+            >
+          </div>
+
+          <div class="field">
+            <label for="months">Plazo</label>
+
+            <select id="months">
+              <option value="36">36 meses</option>
+              <option value="48">48 meses</option>
+              <option value="60" selected>60 meses</option>
+              <option value="72">72 meses</option>
+              <option value="84">84 meses</option>
+            </select>
+          </div>
+
+          <button class="btn" type="button" onclick="calculateLoan()">
+            Calcular cuota
+          </button>
+
+          <div class="result" id="loanResult">
+            <small>Cuota mensual estimada</small>
+            <strong>—</strong>
+            <p>Introduce tus datos y pulsa calcular.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- POR QUÉ USAR LA WEB -->
+
+    <section>
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Antes de financiar, calcula bien</h2>
+
+          <p>
+            Una cuota mensual puede parecer cómoda, pero el plazo y los
+            intereses también importan.
+          </p>
+        </div>
+
+        <div class="grid-3">
+
+          <div class="card info-card">
+            <div class="icon">€</div>
+
+            <h3>Mira el coste completo</h3>
+
+            <p>
+              No te fijes únicamente en la cuota. El plazo y el coste de
+              financiación pueden cambiar mucho lo que acabarás pagando.
+            </p>
+          </div>
+
+
+          <div class="card info-card">
+            <div class="icon">⏱</div>
+
+            <h3>Elige bien el plazo</h3>
+
+            <p>
+              Un plazo más largo puede reducir la cuota mensual, pero normalmente
+              aumenta el tiempo durante el que estarás pagando.
+            </p>
+          </div>
+
+
+          <div class="card info-card">
+            <div class="icon">✓</div>
+
+            <h3>Compara antes de decidir</h3>
+
+            <p>
+              Antes de firmar una financiación, revisa el tipo de interés,
+              comisiones, entrada, cuota y coste total.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CALCULADORA INVERSA -->
+
+    <section id="presupuesto">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>¿Cuánto coche puedes permitirte?</h2>
+
+          <p>
+            Indica cuánto te gustaría pagar al mes y calcularemos un presupuesto
+            aproximado de financiación.
+          </p>
+        </div>
+
+
+        <div class="budget-box">
+
+          <div class="card budget-form">
+
+            <div class="field">
+              <label for="monthlyBudget">
+                Cuota mensual que quieres pagar (€)
+              </label>
+
+              <input
+                id="monthlyBudget"
+                type="number"
+                min="50"
+                step="10"
+                value="300"
+              >
+            </div>
+
+
+            <div class="field">
+              <label for="budgetMonths">
+                Plazo
+              </label>
+
+              <select id="budgetMonths">
+                <option value="36">36 meses</option>
+                <option value="48">48 meses</option>
+                <option value="60" selected>60 meses</option>
+                <option value="72">72 meses</option>
+                <option value="84">84 meses</option>
+              </select>
+            </div>
+
+
+            <button
+              class="btn"
+              type="button"
+              onclick="calculateBudget()"
+            >
+              Calcular presupuesto
+            </button>
+
+          </div>
+
+
+          <div class="budget-result">
+
+            <p>Importe aproximado que podrías financiar</p>
+
+            <strong id="budgetResult">—</strong>
+
+            <p>
+              Es una estimación matemática basada en un tipo orientativo del 8%
+              anual. No representa una oferta de financiación.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- CONSEJOS -->
+
+    <section id="consejos">
+
+      <div class="container article">
+
+        <h2>Cómo calcular la financiación de un coche</h2>
+
+        <p>
+          Comprar un coche financiado implica valorar algo más que el precio
+          del vehículo. La cuota mensual depende principalmente del importe
+          financiado, el plazo y el coste de financiación.
+        </p>
+
+
+        <h3>1. Precio del coche</h3>
+
+        <p>
+          El primer dato es el precio del vehículo que quieres comprar.
+          Conviene tener en cuenta también gastos asociados a la compra,
+          mantenimiento, seguro e impuestos.
+        </p>
+
+
+        <h3>2. Entrada</h3>
+
+        <p>
+          Si realizas una entrada, reduces el importe que necesitas financiar.
+          Esto puede reducir la cuota mensual y el coste total de la operación.
+        </p>
+
+
+        <h3>3. Plazo</h3>
+
+        <p>
+          El plazo indica durante cuánto tiempo pagarás la financiación.
+          Un plazo más largo suele reducir la cuota mensual, pero puede
+          aumentar el coste total.
+        </p>
+
+
+        <h3>4. Tipo de interés</h3>
+
+        <p>
+          El tipo de interés influye directamente en el coste de la financiación.
+          En una operación real también pueden existir comisiones u otros costes.
+        </p>
+
+
+        <h3>5. Compara antes de firmar</h3>
+
+        <p>
+          Antes de aceptar una financiación, revisa las condiciones completas:
+          TAE, TIN, comisiones, importe total adeudado, plazo, cuota y cualquier
+          producto adicional asociado.
+        </p>
+
+
+        <div class="warning">
+          <strong>Importante:</strong>
+          las calculadoras de Coche Finance son herramientas orientativas.
+          El resultado no constituye una oferta ni garantiza que una entidad
+          financiera vaya a aprobar una operación.
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- PASOS -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Financiar un coche, paso a paso</h2>
+
+          <p>
+            Utiliza Coche Finance como punto de partida antes de tomar una decisión.
+          </p>
+        </div>
+
+
+        <div class="grid-3 steps">
+
+          <div class="card step">
+            <h3>Calcula</h3>
+
+            <p>
+              Introduce el precio del coche, la entrada y el plazo.
+            </p>
+          </div>
+
+
+          <div class="card step">
+            <h3>Comprueba</h3>
+
+            <p>
+              Valora si la cuota encaja con tu presupuesto mensual.
+            </p>
+          </div>
+
+
+          <div class="card step">
+            <h3>Compara</h3>
+
+            <p>
+              Revisa diferentes condiciones antes de firmar cualquier contrato.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FORMULARIO -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <h2>¿Quieres recibir información?</h2>
+
+          <p>
+            Déjanos tus datos y podremos contactar contigo para conocer
+            qué tipo de coche y financiación estás buscando.
+          </p>
+
+        </div>
+
+
+        <div class="card contact-wrap">
+
+          <form
+            action="https://formsubmit.co/Cochefinance@gmail.com"
+            method="POST"
+          >
+
+            <!-- CONFIGURACIÓN DEL FORMULARIO -->
+
+            <input
+              type="hidden"
+              name="_subject"
+              value="Nueva solicitud desde Coche Finance"
+            >
+
+            <input
+              type="hidden"
+              name="_captcha"
+              value="true"
+            >
+
+            <input
+              type="hidden"
+              name="_template"
+              value="table"
+            >
+
+            <input
+              type="hidden"
+              name="_next"
+              value="https://emilioglez96.github.io/financiacion-coches/?enviado=1"
+            >
+
+
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="name">Nombre</label>
+
+                <input
+                  id="name"
+                  type="text"
+                  name="nombre"
+                  autocomplete="name"
+                  required
+                >
+              </div>
+
+
+              <div class="field">
+                <label for="phone">Teléfono</label>
+
+                <input
+                  id="phone"
+                  type="tel"
+                  name="telefono"
+                  autocomplete="tel"
+                  required
+                >
+              </div>
+
+
+              <div class="field">
+                <label for="email">Email</label>
+
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  required
+                >
+              </div>
+
+
+              <div class="field">
+                <label for="carBudget">
+                  Presupuesto aproximado (€)
+                </label>
+
+                <input
+                  id="carBudget"
+                  type="number"
+                  name="presupuesto"
+                  min="0"
+                  step="500"
+                >
+              </div>
+
+
+              <div class="field full">
+
+                <label for="message">
+                  ¿Qué coche estás buscando?
+                </label>
+
+                <textarea
+                  id="message"
+                  name="mensaje"
+                  rows="4"
+                  style="width:100%;padding:13px 14px;border:1px solid #d5dbe5;border-radius:11px;font-family:inherit;font-size:16px;resize:vertical;"
+                  placeholder="Marca, modelo, nuevo o segunda mano, etc."
+                ></textarea>
+
+              </div>
+
+            </div>
+
+
+            <label class="check">
+
+              <input
+                type="checkbox"
+                name="privacidad"
+                required
+              >
+
+              <span>
+                He leído y acepto la
+                <a href="#privacidad" style="color:#2563eb;">
+                  Política de privacidad
+                </a>.
+              </span>
+
+            </label>
+
+
+            <button class="btn" type="submit">
+              Enviar solicitud
+            </button>
+
+
+            <p class="form-note">
+              Tus datos se utilizarán únicamente para gestionar tu solicitud
+              y responderte. No se garantiza la aprobación de ninguna
+              financiación.
+            </p>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- FAQ -->
+
+    <section id="faq">
+
+      <div class="container">
+
+        <div class="section-title">
+
+          <h2>Preguntas frecuentes</h2>
+
+          <p>
+            Respuestas rápidas sobre la financiación de coches.
+          </p>
+
+        </div>
+
+
+        <div class="faq">
+
+          <details>
+            <summary>¿La calculadora es gratuita?</summary>
+
+            <p>
+              Sí. Puedes utilizar las calculadoras de Coche Finance
+              gratuitamente.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>¿La cuota calculada es definitiva?</summary>
+
+            <p>
+              No. Es una estimación orientativa. Una financiación real puede
+              tener un tipo de interés diferente, comisiones y otras condiciones.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>¿Qué plazo debería elegir?</summary>
+
+            <p>
+              Depende de tu situación económica. Un plazo mayor puede reducir
+              la cuota, pero puede aumentar el coste total de la financiación.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>¿Puedo utilizar la calculadora para un coche usado?</summary>
+
+            <p>
+              Sí. La calculadora permite realizar estimaciones tanto para
+              vehículos nuevos como usados.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>¿Coche Finance es una entidad financiera?</summary>
+
+            <p>
+              No. Coche Finance es una web informativa y de herramientas de
+              cálculo. Las condiciones y decisiones de financiación corresponden
+              a las entidades financieras que puedan intervenir en una operación.
+            </p>
+          </details>
+
+
+          <details>
+            <summary>¿El resultado garantiza que me concederán financiación?</summary>
+
+            <p>
+              No. La concesión depende de la entidad financiera y de su análisis
+              de cada solicitud.
+            </p>
+          </details>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SOBRE NOSOTROS -->
+
+    <section>
+
+      <div class="container article">
+
+        <h2>Sobre Coche Finance</h2>
+
+        <p>
+          Coche Finance nace con un objetivo sencillo: ayudar a las personas
+          que están pensando en comprar un coche a entender mejor los números
+          antes de tomar una decisión.
+        </p>
+
+        <p>
+          Nuestra web ofrece herramientas gratuitas para realizar cálculos
+          orientativos y contenido educativo relacionado con la financiación
+          de vehículos.
+        </p>
+
+        <p>
+          No somos una entidad financiera y los resultados de nuestras
+          calculadoras no constituyen ofertas de crédito.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- PRIVACIDAD -->
+
+    <section id="privacidad">
+
+      <div class="container legal">
+
+        <h2>Política de privacidad</h2>
+
+        <p>
+          Última actualización: septiembre de 2026.
+        </p>
+
+
+        <h3>1. Responsable</h3>
+
+        <p>
+          Responsable: <strong>Coche Finance</strong>
+        </p>
+
+        <p>
+          Email de contacto:
+          <strong>Cochefinance@gmail.com</strong>
+        </p>
+
+        <p>
+          Domicilio y datos fiscales: información pendiente de completar
+          por el responsable antes de utilizar esta sección como texto legal
+          definitivo.
+        </p>
+
+
+        <h3>2. Datos que podemos recibir</h3>
+
+        <p>
+          Cuando una persona utiliza el formulario de contacto puede facilitar
+          su nombre, teléfono, correo electrónico, presupuesto aproximado y
+          otra información relacionada con su solicitud.
+        </p>
+
+
+        <h3>3. Finalidad</h3>
+
+        <p>
+          Los datos se utilizarán para gestionar las solicitudes enviadas
+          voluntariamente por los usuarios y responder a sus consultas.
+        </p>
+
+
+        <h3>4. Base jurídica</h3>
+
+        <p>
+          La base jurídica dependerá de la finalidad concreta del tratamiento,
+          pudiendo incluir el consentimiento del usuario cuando corresponda.
+        </p>
+
+
+        <h3>5. Conservación</h3>
+
+        <p>
+          Los datos se conservarán durante el tiempo necesario para gestionar
+          la solicitud y durante los plazos que puedan resultar exigibles
+          legalmente.
+        </p>
+
+
+        <h3>6. Derechos</h3>
+
+        <p>
+          El usuario puede solicitar información sobre sus datos, así como
+          ejercer los derechos que correspondan conforme a la normativa
+          aplicable, escribiendo a:
+          <strong>Cochefinance@gmail.com</strong>
+        </p>
+
+
+        <h3>7. Encargados y terceros</h3>
+
+        <p>
+          El formulario de contacto utiliza un proveedor externo para recibir
+          y enviar las solicitudes al correo indicado. Los servicios externos
+          utilizados deberán revisarse y documentarse adecuadamente antes
+          de poner el sistema en funcionamiento de forma definitiva.
+        </p>
+
+
+        <div class="warning">
+          Este texto es una base informativa y no sustituye una revisión
+          jurídica. Antes de operar comercialmente, completa los datos legales
+          obligatorios y revisa la política con un profesional si fuera necesario.
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- AVISO LEGAL -->
+
+    <section>
+
+      <div class="container legal">
+
+        <h2>Aviso legal</h2>
+
+
+        <h3>Identificación</h3>
+
+        <p>
+          La web se identifica comercialmente como
+          <strong>Coche Finance</strong>.
+        </p>
+
+        <p>
+          Contacto:
+          <strong>Cochefinance@gmail.com</strong>
+        </p>
+
+
+        <h3>Actividad</h3>
+
+        <p>
+          Coche Finance ofrece herramientas de cálculo y contenido informativo
+          relacionado con la financiación de vehículos.
+        </p>
+
+
+        <h3>Ausencia de oferta financiera</h3>
+
+        <p>
+          La información publicada en esta web tiene carácter general y
+          orientativo. No constituye una oferta de crédito, asesoramiento
+          financiero personalizado ni garantía de aprobación de una financiación.
+        </p>
+
+
+        <h3>Responsabilidad</h3>
+
+        <p>
+          Los resultados de las calculadoras pueden variar respecto a las
+          condiciones reales ofrecidas por una entidad financiera.
+        </p>
+
+
+        <h3>Datos legales pendientes</h3>
+
+        <p>
+          Antes de considerar este aviso legal definitivo deberán completarse
+          los datos identificativos y fiscales que resulten legalmente exigibles,
+          incluyendo, cuando corresponda, domicilio y número de identificación
+          fiscal.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- COOKIES -->
+
+    <section>
+
+      <div class="container legal">
+
+        <h2>Política de cookies</h2>
+
+
+        <h3>¿Qué son las cookies?</h3>
+
+        <p>
+          Las cookies y tecnologías similares permiten almacenar o consultar
+          información en el dispositivo del usuario.
+        </p>
+
+
+        <h3>Cookies utilizadas actualmente</h3>
+
+        <p>
+          Esta versión de la web utiliza almacenamiento local del navegador
+          para recordar la decisión del usuario sobre el aviso de cookies.
+        </p>
+
+
+        <p>
+          Si en el futuro se incorporan Google AdSense, Google Analytics,
+          publicidad personalizada u otros servicios que utilicen cookies o
+          tecnologías similares, esta política y el mecanismo de consentimiento
+          deberán actualizarse antes de su utilización.
+        </p>
+
+
+        <h3>Gestión del consentimiento</h3>
+
+        <p>
+          El usuario puede aceptar o rechazar las opciones mostradas en el
+          aviso de cookies.
+        </p>
+
+
+        <div class="warning">
+          Importante: antes de activar AdSense deberán configurarse correctamente
+          los mecanismos de consentimiento exigidos por Google y la normativa
+          aplicable. El simple aviso actual no pretende sustituir una CMP
+          certificada de Google.
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="container footer-grid">
+
+      <div>
+
+        <h3>Coche Finance</h3>
+
+        <p>
+          Herramientas y contenidos para entender mejor la financiación de tu coche.
+        </p>
+
+        <p style="margin-top:8px;">
+          Contacto:
+          Cochefinance@gmail.com
+        </p>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="#privacidad">Privacidad</a>
+
+        <a href="#faq">FAQ</a>
+
+        <a href="#consejos">Consejos</a>
+
+        <a href="#calculadora">Calculadora</a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- COOKIE BANNER -->
+
+  <div id="cookieBanner">
+
+    <p>
+      Utilizamos almacenamiento local para recordar tu elección sobre este
+      aviso. Si incorporamos cookies de análisis o publicidad, solicitaremos
+      el consentimiento correspondiente.
+    </p>
+
+
+    <div class="cookie-buttons">
+
+      <button
+        class="reject"
+        type="button"
+        onclick="rejectCookies()"
+      >
+        Rechazar
+      </button>
+
+
+      <button
+        class="accept"
+        type="button"
+        onclick="acceptCookies()"
+      >
+        Aceptar
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /* ==============================
+       CONFIGURACIÓN
+    ============================== */
+
+    const INTEREST_RATE = 0.08;
+
+
+    /* ==============================
+       CALCULADORA PRINCIPAL
+    ============================== */
+
+    function calculateLoan() {
+
+      const price = Number(
+        document.getElementById("carPrice").value
+      );
+
+      const downPayment = Number(
+        document.getElementById("downPayment").value
+      );
+
+      const months = Number(
+        document.getElementById("months").value
+      );
+
+      const result = document.getElementById("loanResult");
+
+
+      if (!price || price <= 0) {
+
+        result.innerHTML = `
+          <small>Cuota mensual estimada</small>
+          <strong>—</strong>
+          <p>Introduce un precio válido.</p>
+        `;
+
+        return;
+      }
+
+
+      if (downPayment < 0 || downPayment >= price) {
+
+        result.innerHTML = `
+          <small>Cuota mensual estimada</small>
+          <strong>—</strong>
+          <p>La entrada debe ser inferior al precio del coche.</p>
+        `;
+
+        return;
+      }
+
+
+      const financed = price - downPayment;
+
+      const monthlyRate = INTEREST_RATE / 12;
+
+
+      let payment;
+
+
+      if (monthlyRate === 0) {
+
+        payment = financed / months;
+
+      } else {
+
+        payment =
+          financed *
+          (
+            monthlyRate *
+            Math.pow(1 + monthlyRate, months)
+          ) /
+          (
+            Math.pow(1 + monthlyRate, months) - 1
+          );
+
+      }
+
+
+      result.innerHTML = `
+        <small>Cuota mensual estimada</small>
+
+        <strong>
+          ${formatCurrency(payment)}
+        </strong>
+
+        <p>
+          Importe financiado:
+          ${formatCurrency(financed)}
+        </p>
+
+        <p>
+          Tipo utilizado para la estimación: 8% anual.
+        </p>
+      `;
+
+    }
+
+
+    /* ==============================
+       CALCULADORA INVERSA
+    ============================== */
+
+    function calculateBudget() {
+
+      const payment = Number(
+        document.getElementById("monthlyBudget").value
+      );
+
+      const months = Number(
+        document.getElementById("budgetMonths").value
+      );
+
+      const result = document.getElementById("budgetResult");
+
+
+      if (!payment || payment <= 0) {
+
+        result.textContent = "—";
+
+        return;
+      }
+
+
+      const monthlyRate = INTEREST_RATE / 12;
+
+
+      let financed;
+
+
+      if (monthlyRate === 0) {
+
+        financed = payment * months;
+
+      } else {
+
+        financed =
+          payment *
+          (
+            1 -
+            Math.pow(1 + monthlyRate, -months)
+          ) /
+          monthlyRate;
+
+      }
+
+
+      result.textContent = formatCurrency(financed);
+
+    }
+
+
+    /* ==============================
+       FORMATO MONEDA
+    ============================== */
+
+    function formatCurrency(value) {
+
+      return new Intl.NumberFormat(
+        "es-ES",
+        {
+          style: "currency",
+          currency: "EUR",
+          maximumFractionDigits: 0
+        }
+      ).format(value);
+
+    }
+
+
+    /* ==============================
+       COOKIES
+    ============================== */
+
+    const cookieBanner =
+      document.getElementById("cookieBanner");
+
+
+    function showCookieBanner() {
+
+      if (
+        localStorage.getItem("cocheFinanceCookieChoice")
+        === null
+      ) {
+
+        cookieBanner.style.display = "block";
+
+      }
+
+    }
+
+
+    function acceptCookies() {
+
+      localStorage.setItem(
+        "cocheFinanceCookieChoice",
+        "accepted"
+      );
+
+      cookieBanner.style.display = "none";
+
+    }
+
+
+    function rejectCookies() {
+
+      localStorage.setItem(
+        "cocheFinanceCookieChoice",
+        "rejected"
+      );
+
+      cookieBanner.style.display = "none";
+
+    }
+
+
+    /* ==============================
+       MENSAJE DESPUÉS DEL FORMULARIO
+    ============================== */
+
+    function checkFormMessage() {
+
+      const params =
+        new URLSearchParams(window.location.search);
+
+
+      if (params.get("enviado") === "1") {
+
+        alert(
+          "Gracias. Hemos recibido tu solicitud."
+        );
+
+        window.history.replaceState(
+          {},
+          document.title,
+          window.location.pathname
+        );
+
+      }
+
+    }
+
+
+    /* ==============================
+       INICIO
+    ============================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function () {
+
+        showCookieBanner();
+
+        checkFormMessage();
+
+        calculateLoan();
+
+        calculateBudget();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
