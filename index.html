@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>FinanciaCoche | Calcula tu cuota de coche</title>
+  <meta name="description" content="Calcula cuánto pagarías al mes por tu coche. Prueba nuestra calculadora de financiación gratis y sin compromiso.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    /* HEADER */
+
+    header {
+      background: #ffffff;
+      border-bottom: 1px solid #e8ebf2;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: 800;
+      color: #172033;
+    }
+
+    .logo span {
+      color: #2463eb;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #2463eb;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 65px 0 55px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 55px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #e2ebff;
+      color: #2463eb;
+      padding: 8px 13px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 62px);
+      line-height: 1.03;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: #2463eb;
+    }
+
+    .hero-text {
+      font-size: 19px;
+      color: #5d6678;
+      max-width: 590px;
+      margin-bottom: 25px;
+    }
+
+    .trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      color: #596274;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .trust span {
+      background: #ffffff;
+      border: 1px solid #e5e9f1;
+      padding: 8px 11px;
+      border-radius: 10px;
+    }
+
+    /* CALCULATOR */
+
+    .calculator {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 22px;
+      box-shadow: 0 18px 50px rgba(31, 52, 91, 0.13);
+      border: 1px solid #e8ecf4;
+    }
+
+    .calculator h2 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    .calculator-subtitle {
+      color: #727b8c;
+      font-size: 14px;
+      margin-bottom: 23px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border: 1px solid #dce1ea;
+      border-radius: 11px;
+      padding: 13px 14px;
+      font-size: 16px;
+      outline: none;
+      background: #fff;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #2463eb;
+    }
+
+    .calculate-btn {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 15px;
+      background: #2463eb;
+      color: white;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .calculate-btn:hover {
+      transform: translateY(-1px);
+      background: #174fc7;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      background: #f1f6ff;
+      border-radius: 15px;
+      padding: 19px;
+      text-align: center;
+    }
+
+    .result small {
+      color: #687286;
+      font-weight: 600;
+    }
+
+    .monthly {
+      font-size: 38px;
+      font-weight: 900;
+      color: #2463eb;
+      margin: 4px 0 8px;
+    }
+
+    .result-details {
+      font-size: 12px;
+      color: #697386;
+      margin-bottom: 15px;
+    }
+
+    .lead-btn {
+      display: block;
+      width: 100%;
+      background: #172033;
+      color: white;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 75px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 40px;
+    }
+
+    .section-title h2 {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .section-title p {
+      color: #687286;
+    }
+
+    /* PRICE CARDS */
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .price-card {
+      background: white;
+      padding: 28px;
+      border-radius: 18px;
+      border: 1px solid #e5e9f1;
+      text-align: center;
+    }
+
+    .car-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .price-card h3 {
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .price-card p {
+      color: #70798a;
+      font-size: 14px;
+    }
+
+    .price-card strong {
+      display: block;
+      margin-top: 15px;
+      font-size: 22px;
+      color: #2463eb;
+    }
+
+    /* HOW */
+
+    .how {
+      background: white;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .step-number {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #e5edff;
+      color: #2463eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 17px;
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      color: #6d7687;
+      font-size: 14px;
+    }
+
+    /* LEAD */
+
+    .lead-section {
+      padding-top: 25px;
+    }
+
+    .lead-box {
+      background: #172033;
+      color: white;
+      border-radius: 25px;
+      padding: 45px;
+      display: grid;
+      grid-template-columns: 1fr 430px;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .lead-box h2 {
+      font-size: 38px;
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .lead-box p {
+      color: #c8cfdd;
+    }
+
+    .lead-form {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+    }
+
+    .lead-form input {
+      width: 100%;
+      padding: 13px;
+      margin-bottom: 11px;
+      border: 1px solid #dce1ea;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
+    .lead-form button {
+      width: 100%;
+      border: 0;
+      padding: 14px;
+      border-radius: 9px;
+      background: #2463eb;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .form-note {
+      color: #737d8e;
+      font-size: 11px;
+      margin-top: 9px;
+      text-align: center;
+    }
+
+    /* FAQ */
+
+    .faq {
+      max-width: 760px;
+      margin: auto;
+    }
+
+    details {
+      background: white;
+      border: 1px solid #e5e9f1;
+      border-radius: 12px;
+      padding: 17px 20px;
+      margin-bottom: 11px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    details p {
+      color: #687286;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: #ffffff;
+      border-top: 1px solid #e8ebf2;
+      padding: 30px 0;
+      text-align: center;
+      color: #7a8392;
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 850px) {
+      .hero-grid,
+      .lead-box {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 40px;
+      }
+
+      .hero-grid {
+        gap: 35px;
+      }
+
+      .price-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .lead-box {
+        padding: 30px 22px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero h1 {
+        letter-spacing: -1px;
+      }
+
+      .calculator {
+        padding: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#" class="logo">Financia<span>Coche</span></a>
+
+    <nav>
+      <a href="#calculadora">Calculadora</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#faq">Preguntas frecuentes</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="calculadora">
+    <div class="container hero-grid">
+
+      <div>
+        <div class="badge">🚗 Calculadora gratuita</div>
+
+        <h1>
+          Antes de comprar un coche,
+          <span>calcula cuánto pagarás.</span>
+        </h1>
+
+        <p class="hero-text">
+          Descubre una cuota mensual aproximada en menos de 30 segundos.
+          Ajusta el precio, la entrada y el plazo a tu medida.
+        </p>
+
+        <div class="trust">
+          <span>✓ Gratis</span>
+          <span>✓ Sin compromiso</span>
+          <span>✓ Desde el móvil</span>
+        </div>
+      </div>
+
+      <div class="calculator">
+        <h2>Calcula tu cuota</h2>
+        <p class="calculator-subtitle">
+          Introduce los datos de tu coche.
+        </p>
+
+        <div class="field">
+          <label for="price">Precio del coche (€)</label>
+          <input type="number" id="price" placeholder="Ej. 20.000">
+        </div>
+
+        <div class="field">
+          <label for="down">Entrada (€)</label>
+          <input type="number" id="down" placeholder="Ej. 3.000">
+        </div>
+
+        <div class="field">
+          <label for="months">Plazo</label>
+          <select id="months">
+            <option value="36">36 meses</option>
+            <option value="48">48 meses</option>
+            <option value="60">60 meses</option>
+            <option value="72" selected>72 meses</option>
+            <option value="84">84 meses</option>
+          </select>
+        </div>
+
+        <button class="calculate-btn" onclick="calculate()">
+          Calcular mi cuota →
+        </button>
+
+        <div class="result" id="result">
+          <small>Tu cuota mensual estimada</small>
+
+          <div class="monthly" id="monthly">0 €</div>
+
+          <div class="result-details" id="details"></div>
+
+          <a href="#contacto" class="lead-btn">
+            Quiero información →
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICE EXAMPLES -->
+  <section>
+    <div class="container">
+
+      <div class="section-title">
+        <h2>¿Cuánto coche puedes permitirte?</h2>
+        <p>
+          Hazte una idea de cómo podría quedar una financiación según el precio del vehículo.
+        </p>
+      </div>
+
+      <div class="price-grid">
+
+        <div class="price-card">
+          <div class="car-icon">🚗</div>
+          <h3>10.000 €</h3>
+          <p>Coche económico</p>
+          <strong>Calcula tu cuota</strong>
+        </div>
+
+        <div class="price-card">
+          <div class="car-icon">🚙</div>
+          <h3>20.000 €</h3>
+          <p>Coche familiar</p>
+          <strong>Calcula tu cuota</strong>
+        </div>
+
+        <div class="price-card">
+          <div class="car-icon">🚘</div>
+          <h3>30.000 €</h3>
+          <p>Coche premium</p>
+          <strong>Calcula tu cuota</strong>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="how" id="como-funciona">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Así de fácil</h2>
+        <p>Calcula una estimación en tres pasos.</p>
+      </div>
+
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-number">1</div>
+          <h3>Introduce el precio</h3>
+          <p>
+            Indica cuánto cuesta el coche que quieres comprar.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">2</div>
+          <h3>Elige tu financiación</h3>
+          <p>
+            Ajusta la entrada y el número de meses.
+          </p>
+        </div>
+
+        <div class="step">
+          <div class="step-number">3</div>
+          <h3>Descubre tu cuota</h3>
+          <p>
+            Obtén una estimación de lo que pagarías cada mes.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LEAD -->
+  <section class="lead-section" id="contacto">
+    <div class="container">
+
+      <div class="lead-box">
+
+        <div>
+          <h2>¿Quieres encontrar una opción de financiación?</h2>
+
+          <p>
+            Déjanos tus datos y podremos contactar contigo para conocer
+            qué coche buscas y orientarte sobre las opciones disponibles.
+          </p>
+        </div>
+
+        <form class="lead-form" onsubmit="sendLead(event)">
+
+          <input
+            type="text"
+            id="name"
+            placeholder="Tu nombre"
+            required
+          >
+
+          <input
+            type="tel"
+            id="phone"
+            placeholder="Tu teléfono"
+            required
+          >
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Tu email"
+            required
+          >
+
+          <input
+            type="number"
+            id="carPrice"
+            placeholder="Precio aproximado del coche"
+          >
+
+          <button type="submit">
+            Quiero información →
+          </button>
+
+          <div class="form-note">
+            Sin compromiso. Tus datos se utilizarán únicamente para contactar contigo.
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+
+      <div class="section-title">
+        <h2>Preguntas frecuentes</h2>
+      </div>
+
+      <div class="faq">
+
+        <details>
+          <summary>¿La calculadora es gratuita?</summary>
+          <p>
+            Sí. Puedes utilizar la calculadora gratuitamente.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿La cuota calculada es definitiva?</summary>
+          <p>
+            No. El resultado es una estimación orientativa. Las condiciones
+            reales pueden variar según la operación y el perfil del cliente.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿Puedo financiar un coche de segunda mano?</summary>
+          <p>
+            Dependerá de las condiciones de cada operación y entidad financiera.
+          </p>
+        </details>
+
+        <details>
+          <summary>¿Tengo que pedir financiación después de utilizar la calculadora?</summary>
+          <p>
+            No. Utilizar la calculadora no te obliga a solicitar ninguna financiación.
+          </p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    © 2026 FinanciaCoche · Calculadora de financiación de coches
+  </div>
+</footer>
+
+<script>
+
+  const INTEREST_RATE = 0.08;
+
+  function calculate() {
+
+    const price = Number(document.getElementById("price").value);
+    const down = Number(document.getElementById("down").value);
+    const months = Number(document.getElementById("months").value);
+
+    if (!price || price <= 0) {
+      alert("Introduce el precio del coche.");
+      return;
+    }
+
+    if (down < 0 || down >= price) {
+      alert("La entrada debe ser menor que el precio del coche.");
+      return;
+    }
+
+    const amount = price - down;
+    const monthlyRate = INTEREST_RATE / 12;
+
+    const monthlyPayment =
+      amount *
+      monthlyRate *
+      Math.pow(1 + monthlyRate, months) /
+      (Math.pow(1 + monthlyRate, months) - 1);
+
+    const rounded = monthlyPayment.toFixed(0);
+
+    document.getElementById("monthly").textContent =
+      Number(rounded).toLocaleString("es-ES") + " €";
+
+    document.getElementById("details").textContent =
+      `${months} meses · Importe financiado: ${amount.toLocaleString("es-ES")} €`;
+
+    document.getElementById("result").style.display = "block";
+  }
+
+  function sendLead(event) {
+
+    event.preventDefault();
+
+    const name = document.getElementById("name").value;
+
+    alert(
+      "Gracias, " +
+      name +
+      ". El formulario está preparado para conectar con un sistema de recepción de contactos."
+    );
+  }
+
+</script>
+
+</body>
+</html>
